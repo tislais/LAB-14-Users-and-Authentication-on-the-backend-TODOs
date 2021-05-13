@@ -19,7 +19,6 @@ const todos = [
     userId: 1
   },
   {
-
     task: 'walk the dog',
     completed: false,
     userId: 1
