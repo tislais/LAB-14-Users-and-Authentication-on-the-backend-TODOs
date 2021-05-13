@@ -13,17 +13,18 @@ async function run() {
     CREATE TABLE users (
       id SERIAL PRIMARY KEY NOT NULL,
       name VARCHAR(512) NOT NULL,
+      email VARCHAR(512) NOT NULL,
       hash VARCHAR(512) NOT NULL
     );
 
-      );
-        CREATE TABLE todos (
-        id SERIAL PRIMARY KEY NOT NULL,
-        task VARCHAR(512) NOT NULL,
-        completed BOOLEAN DEFAULT FALSE NOT NULL,
-        user_id INTEGER NOT NULL REFERENCES users(id)
-      );
-    `);
+    );
+      CREATE TABLE todos (
+      id SERIAL PRIMARY KEY NOT NULL,
+      task VARCHAR(512) NOT NULL,
+      completed BOOLEAN DEFAULT FALSE NOT NULL,
+      user_id INTEGER NOT NULL REFERENCES users(id)
+    );
+  `);
 
     console.log('create tables complete');
   }
