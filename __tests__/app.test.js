@@ -34,7 +34,7 @@ describe('API Routes', () => {
       id: 1,
       task: 'wash the dishes',
       completed: false,
-      userId: 4
+      userId: 1
     };
 
     // append the token to your requests:
@@ -50,27 +50,28 @@ describe('API Routes', () => {
       user.token;
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ 
+      expect(response.body).toEqual({
         userId: user.id,
         ...washDishes
       });
+    });
 
-      it('PUT updated felix to /api/me/todos/:id', async () => {
-        washDishes.task = 'wash the dishes';
-        washDishes.completed = false;
-  
-        const response = await request
-          .put(`/api/me/todos/${washDishes.id}`)
-          .set('Authorization', user.token)
-          .send(washDishes);
-  
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(washDishes);
-  
-      });
-  
+    it('PUT updated felix to /api/me/todos/:id', async () => {
+      washDishes.task = 'wash the dishes';
+      washDishes.completed = false;
+
+      const response = await request
+        .put(`/api/me/todos/${washDishes.id}`)
+        .set('Authorization', user.token)
+        .send(washDishes);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(washDishes);
 
     });
 
+
   });
+
 });
+
