@@ -11,7 +11,7 @@ describe('API Routes', () => {
     return client.end();
   });
 
-  describe('/api/cats', () => {
+  describe('/api/me/todos', () => {
     let user;
 
     beforeAll(async () => {
@@ -30,16 +30,45 @@ describe('API Routes', () => {
       user = response.body;
     });
 
+    let washDishes = {
+      id: 1,
+      task: 'wash the dishes',
+      completed: false,
+      userId: 4
+    };
+
     // append the token to your requests:
     //  .set('Authorization', user.token);
 
-    it('VERB to /api/route [with context]', async () => {
+    it('POST todo to /api/me/todos', async () => {
+      const response = await request
+        .post('/api/me/todos')
+        .set('Authorization', user.token)
+        .send(washDishes);
 
       // remove this line, here to not have lint error:
       user.token;
 
-      // expect(response.status).toBe(200);
-      // expect(response.body).toEqual(?);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ 
+        userId: user.id,
+        ...washDishes
+      });
+
+      it('PUT updated felix to /api/me/todos/:id', async () => {
+        washDishes.task = 'wash the dishes';
+        washDishes.completed = false;
+  
+        const response = await request
+          .put(`/api/me/todos/${washDishes.id}`)
+          .set('Authorization', user.token)
+          .send(washDishes);
+  
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(washDishes);
+  
+      });
+  
 
     });
 
