@@ -1,7 +1,7 @@
 const users = [
   {
     name: 'Cat Lover',
-    email: 'lover@cats.com',
+    email: 'test@example.com',
     password: 'sekrit'
   }
 ];
