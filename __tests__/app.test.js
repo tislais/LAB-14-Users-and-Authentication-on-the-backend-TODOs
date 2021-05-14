@@ -40,9 +40,9 @@ describe('API Routes', () => {
     // append the token to your requests:
     //  .set('Authorization', user.token);
 
-    it('POST todo to /api/me/todos', async () => {
+    it('POST todo to /api/todos', async () => {
       const response = await request
-        .post('/api/me/todos')
+        .post('/api/todos')
         .set('Authorization', user.token)
         .send(washDishes);
 
@@ -56,12 +56,11 @@ describe('API Routes', () => {
       });
     });
 
-    it('PUT updated todo to /api/me/todos/:id', async () => {
-      washDishes.task = 'dry the dishes';
+    it('PUT updated todo to /api/todos/:id', async () => {
       washDishes.completed = true;
 
       const response = await request
-        .put(`/api/me/todos/${washDishes.id}`)
+        .put(`/api/todos/${washDishes.id}/completed`)
         .set('Authorization', user.token)
         .send(washDishes);
 
@@ -73,7 +72,7 @@ describe('API Routes', () => {
     it('GET my /api/me/todos only returns my todos', async () => {
       // this is setup so that there is a cat belong to someone else in the db
       const todoResponse = await request
-        .post('/api/me/todos')
+        .post('/api/todos')
         .set('Authorization', user.token)
         .send({
           task: 'wash the dog',
@@ -92,9 +91,9 @@ describe('API Routes', () => {
 
     });
 
-    it('DELETE walk the dog from /api/me/todos/:id', async () => {
+    it('DELETE walk the dog from /api/todos/:id', async () => {
       const todoResponse = await request
-        .post('/api/me/todos')
+        .post('/api/todos')
         .set('Authorization', user.token)
         .send({
           task: 'walk the dog',
@@ -102,8 +101,7 @@ describe('API Routes', () => {
         });
 
       const todoResponseBody = todoResponse.body;
-
-      const response = await request.delete(`/api/me/todos/${todoResponseBody.id}`).set('Authorization', user.token);
+      const response = await request.delete(`/api/todos/${todoResponseBody.id}`).set('Authorization', user.token);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(todoResponseBody);
     });
