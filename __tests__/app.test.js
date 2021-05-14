@@ -56,7 +56,7 @@ describe('API Routes', () => {
       });
     });
 
-    it.only('PUT updated todo to /api/me/todos/:id', async () => {
+    it('PUT updated todo to /api/me/todos/:id', async () => {
       washDishes.task = 'dry the dishes';
       washDishes.completed = true;
 
@@ -81,27 +81,31 @@ describe('API Routes', () => {
         });
 
       expect(todoResponse.status).toBe(200);
-      const todoReponseBody = todoResponse.body;
+      const todoResponseBody = todoResponse.body;
 
-      
+
       const response = await request.get('/api/me/todos')
         .set('Authorization', user.token);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.not.arrayContaining([todoReponseBody]));
+      expect(response.body).toEqual(todoResponseBody);
 
     });
 
     it('DELETE walk the dog from /api/me/todos/:id', async () => {
-      const walkTheDog = {
-        task: 'walk the dog',
-        completed: false,
-        userId: 1
-      };
+      const todoResponse = await request
+        .post('/api/me/todos')
+        .set('Authorization', user.token)
+        .send({
+          task: 'walk the dog',
+          completed: false
+        });
 
-      const response = await request.delete(`/api/me/todos/${walkTheDog.id}`);
+      const todoResponseBody = todoResponse.body;
+
+      const response = await request.delete(`/api/me/todos/${todoResponseBody.id}`).set('Authorization', user.token);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(walkTheDog);
+      expect(response.body).toEqual(todoResponseBody);
     });
 
 
