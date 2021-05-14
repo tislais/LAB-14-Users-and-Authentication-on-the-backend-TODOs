@@ -88,7 +88,7 @@ describe('API Routes', () => {
         .set('Authorization', user.token);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(todoResponseBody);
+      expect(response.body[1]).toEqual(todoResponseBody);
 
     });
 
